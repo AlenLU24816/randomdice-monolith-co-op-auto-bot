@@ -39,9 +39,107 @@ It automatically detects the game board and performs **swipe actions** to attack
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Environment Setup (Step-by-Step Guide)
 
-### 1️⃣ Install dependencies
+This project requires **BlueStacks + ADB + Python environment setup** before running.
+
+---
+
+## 🖥️ Step 1 — Install BlueStacks
+
+1. Download from the official website:
+   👉 https://www.bluestacks.com/
+
+2. Install and launch BlueStacks
+
+3. Make sure your game can run properly
+
+---
+
+## 🔧 Step 2 — Enable ADB (VERY IMPORTANT)
+
+Inside BlueStacks:
+
+```
+Settings
+→ Advanced
+→ Enable Android Debug Bridge (ADB)
+```
+
+✅ This must be enabled for Python to control the emulator
+
+---
+
+## 📡 Step 3 — Get ADB_SERIAL
+
+### Method 1 (Recommended)
+
+Open Command Prompt and run:
+
+```bash
+adb devices
+```
+
+You should see:
+
+```
+List of devices attached
+127.0.0.1:5555 device
+```
+
+👉 This means:
+
+```text
+ADB_SERIAL = "127.0.0.1:5555"
+```
+
+---
+
+### Method 2 (If nothing shows)
+
+Connect manually:
+
+```bash
+adb connect 127.0.0.1:5555
+```
+
+Then run again:
+
+```bash
+adb devices
+```
+
+---
+
+## 📁 Step 4 — Get ADB_PATH
+
+ADB is an executable file (`adb.exe`)
+
+### Common location:
+
+```text
+C:\platform-tools\adb.exe
+```
+
+👉 So your config should be:
+
+```python
+ADB_PATH = r"C:\platform-tools\adb.exe"
+```
+
+---
+
+### If you don't have ADB
+
+Download Android Platform Tools:
+
+👉 https://developer.android.com/tools/releases/platform-tools
+
+Extract and use directly
+
+---
+
+## 🐍 Step 5 — Install Python Dependencies
 
 ```bash
 pip install opencv-python numpy mss pygetwindow
@@ -49,18 +147,21 @@ pip install opencv-python numpy mss pygetwindow
 
 ---
 
-### 2️⃣ Setup ADB
+## 🧪 Step 6 — Test ADB Connection
 
 ```bash
-adb connect 127.0.0.1:5555
 adb devices
+```
+
+✅ Expected output:
+
+```
+127.0.0.1:5555 device
 ```
 
 ---
 
-## 🚀 Usage
-
-Run the main program:
+## 🚀 Step 7 — Run the Program
 
 ```bash
 python main.py
@@ -68,241 +169,30 @@ python main.py
 
 ---
 
-## 🖥️ GUI Settings
+## 🧠 Common Issues
 
-When starting, a GUI will appear.
+### ❌ Device not found
 
-You can configure:
-
-* `WINDOW_TITLE_KEYWORD`
-* `ADB_SERIAL`
-* `ADB_PATH`
-* `MODE` (preview / run)
-
-### Buttons:
-
-* **Apply** → Save configuration
-* **Start** → Launch bot
-
----
-
-## 🔄 Modes
-
-### 🔹 Preview Mode
-
-* Uses practice board ratios
-* Shows debug view
-* ✅ Also performs attacks
-
----
-
-### 🔹 Run Mode
-
-* Uses real battle ratios
-* Executes attacks
-
----
-
-## 🧠 Core Workflow
-
-```text
-Screen Capture (mss)
-↓
-Crop BlueStacks window
-↓
-Locate board (ratio)
-↓
-Sample each cell center (BGR)
-↓
-Classify R / B / None
-↓
-Pair targets
-↓
-ADB swipe execution
-```
-
----
-
-## 🎮 Game Logic
-
-* Grid: `3 × 5`
-* Available cells: ~11
-* Action:
-
-```
-Blue → Red
-Red → Blue
-```
-
----
-
-## 🎨 Color Detection
-
-```python
-RED_BGR = (111, 23, 199)
-BLUE_BGR = (122, 100, 0)
-NONE_THRESHOLD_SQUARED = 4200
-```
-
----
-
-## 📐 Board Detection
-
-### Run Mode
-
-```python
-BOARD_X_RATIO = 0.212037
-BOARD_Y_RATIO = 0.503646
-BOARD_W_RATIO = 0.575926
-BOARD_H_RATIO = 0.187500
-```
-
-### Preview Mode
-
-```python
-BOARD_X_RATIO = 0.212037
-BOARD_Y_RATIO = 0.553646
-BOARD_W_RATIO = 0.578704
-BOARD_H_RATIO = 0.187500
-```
-
----
-
-## ⚔️ Attack Strategy
-
-* Select:
-
-  * 6 Reds
-  * 6 Blues
-* Match using:
-
-```
-Greedy shortest distance pairing
-```
-
-* Execute:
-
-```
-Blue → Red
-Red → Blue
-```
-
----
-
-## 📡 ADB Control
+👉 Fix:
 
 ```bash
-adb shell input swipe x1 y1 x2 y2 duration
-```
-
-Key parameters:
-
-```python
-SWIPE_DURATION_MS = 180
-PAIR_ATTACK_INTERVAL_SEC = 0.5
+adb connect 127.0.0.1:5555
 ```
 
 ---
 
-## 🧩 Anti-Noise System
+### ❌ Multiple devices error
 
-### 🔹 Initialization Filter
-
-* Scan 5 times
-* Mark unstable cells as Blocked
-
-### 🔹 Voting Mechanism
-
-* Sample multiple frames
-* Use majority vote
-
----
-
-## 💾 Configuration
-
-Saved in:
-
-```
-bot_config.json
-```
-
-* Auto-load on startup
-* Updated via GUI
-
----
-
-## 🐞 Known Issues & Fixes
-
-### ❌ Swipe not working
-
-**Cause:**
-
-```
-SWIPE_DURATION too short
-```
-
-**Fix:**
-
-```python
-SWIPE_DURATION_MS = 180
-```
-
----
-
-### ❌ Preview mode not attacking
-
-**Fix:**
-
-* Enable attack in preview loop
-
----
-
-## 📁 Project Structure
-
-```
-project/
-│── main.py
-│── bot_config.json
-│── README.md
-```
-
----
-
-## 📌 GitHub Setup
+👉 Fix:
 
 ```bash
-git init
-git add .
-git commit -m "initial commit"
-git remote add origin <repo_url>
-git branch -M main
-git push -u origin main
+adb -s 127.0.0.1:5555 devices
 ```
 
----
+Or set in code:
 
-## 🔮 Future Improvements
-
-* 🔹 Real-time continuous capture
-* 🔹 Dynamic pairing (not fixed 6 pairs)
-* 🔹 AI-based decision system (maximize DPS)
-* 🔹 GUI tuning (swipe speed, delay)
-
----
-
-## 🌍 Keywords
-
-* Automation bot
-* Swipe action
-* Image recognition
-* Voting mechanism
-* Configuration file
-
----
-
-## ⚠️ Disclaimer
-
-This project is for **educational purposes only**.
-Use at your own risk.
+```python
+ADB_SERIAL = "127.0.0.1:5555"
+```
 
 ---
