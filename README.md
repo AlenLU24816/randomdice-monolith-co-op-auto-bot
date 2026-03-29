@@ -19,7 +19,7 @@ It automatically detects the game board and performs **swipe actions** to attack
 * 🔄 Dual-mode support:
 
   * `preview` (practice mode)
-  * `run` (real mode)
+  * `run` (co-op mode)
 * 🧠 Noise reduction with **voting mechanism**
 * 💾 Persistent settings via configuration file
 * 🖥️ GUI control panel
