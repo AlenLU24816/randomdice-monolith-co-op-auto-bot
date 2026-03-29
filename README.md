@@ -1,4 +1,4 @@
-# 🚀 Auto Attack Bot (Python + OpenCV + ADB)
+# 🚀 randomdice-monolith-co-op-auto-bot
 
 ## 📌 Overview
 
