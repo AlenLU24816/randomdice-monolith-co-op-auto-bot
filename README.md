@@ -1,4 +1,4 @@
-# 🚀 randomdice-monolith-co-op-auto-bot
+# 🚀 Randomdice-monolith-co-op-auto-bot
 
 ## 📌 Overview
 
