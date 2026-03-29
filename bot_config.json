@@ -1,0 +1,6 @@
+{
+    "WINDOW_TITLE_KEYWORD": "BlueStacks App Player",
+    "ADB_SERIAL": "127.0.0.1:5555",
+    "ADB_PATH": "C:\\platform-tools\\adb.exe",
+    "MODE": "preview"
+}
