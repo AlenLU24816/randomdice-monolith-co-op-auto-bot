@@ -196,3 +196,12 @@ ADB_SERIAL = "127.0.0.1:5555"
 ```
 
 ---
+---
+
+### ❌ Python not recognized
+
+#### Symptoms
+
+```bash
+'python' is not recognized...
+'pip' is not recognized...
